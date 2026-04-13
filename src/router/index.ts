@@ -5,6 +5,11 @@ import ExploreView from '@/views/ExploreView.vue'
 import LibraryView from '@/views/LibraryView.vue'
 import LoginView from '@/views/LoginView.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
+import { useAuthStore } from '@/stores/useAuthStore'
+
+const loginMeta = {
+  requiresAuth: true,
+}
 
 const routes: RouteRecordRaw[] = [
   {
@@ -12,10 +17,10 @@ const routes: RouteRecordRaw[] = [
     component: DefaultLayout,
     redirect: 'explore',
     children: [
-      { path: '/explore', component: ExploreView, meta: { layout: 'DefaultLayout' } },
-      { path: '/anime/:id', component: AnimeDetailView },
-      { path: '/library', component: LibraryView },
-      { path: '/login', component: LoginView },
+      { path: 'explore', component: ExploreView, meta: loginMeta },
+      { path: 'anime/:id', component: AnimeDetailView, meta: loginMeta },
+      { path: 'library', component: LibraryView, meta: loginMeta },
+      { path: 'login', component: LoginView },
     ],
   },
 ]
@@ -23,6 +28,16 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+})
+
+router.beforeEach((to) => {
+  const auth = useAuthStore()
+
+  if (to.meta.requiresAuth && !auth.isLoggedIn) {
+    return { path: 'login', query: { redirect: to.fullPath } }
+  }
+
+  return true
 })
 
 export default router
