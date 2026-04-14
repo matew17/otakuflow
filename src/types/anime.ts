@@ -1,3 +1,5 @@
+import type { Pagination } from './pagination'
+
 export interface Anime {
   mal_id: number
   title: string
@@ -8,4 +10,9 @@ export interface Anime {
   genres: { mal_id: number; name: string }[]
   status: string
   year: number
+}
+
+export interface AnimeResponse {
+  data: Anime[]
+  pagination: Pagination
 }

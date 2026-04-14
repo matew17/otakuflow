@@ -10,7 +10,7 @@ export async function apiFetch<T>(endpoint: string): Promise<T> {
 
     const json = await res.json()
 
-    return json.data
+    return json
   } catch (error) {
     throw new Error(`${error}`)
   }
