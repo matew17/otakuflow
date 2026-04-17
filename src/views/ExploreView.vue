@@ -1,20 +1,48 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
+import { computed, ref } from 'vue'
 
 import { useGetTopAnime } from '@/composables/useAnimeGetTop'
+import SearchInput from '@/components/SearchInput.vue'
+import { useAnimeSearch } from '@/composables/useAnimeSearch'
+import { refDebounced } from '@vueuse/core'
+import SkeletonCard from '@/components/SkeletonCard.vue'
+import AnimeCard from '@/components/AnimeCard.vue'
 
-const queryResult = useGetTopAnime()
-const { data, isLoading } = toRefs(queryResult)
+const searchInput = ref('')
+const searchQuery = refDebounced(searchInput, 400)
+const page = ref(1)
+
+const queryTopAnime = useGetTopAnime()
+const querySearchAnime = useAnimeSearch(searchQuery, page)
+
+const animeData = computed(
+  () => querySearchAnime.data?.value?.data || queryTopAnime.data?.value?.data,
+)
+const isLoading = computed(
+  () => Boolean(querySearchAnime.isLoading.value) || Boolean(queryTopAnime.isLoading.value),
+)
 </script>
 
 <template>
-  <h1>Explore</h1>
+  <section class="flex flex-col gap-4">
+    <h1>Explore</h1>
 
-  <ul v-if="!isLoading">
-    <li v-for="anime in data?.data" :key="anime.mal_id">
-      {{ anime.title }}
-    </li>
-  </ul>
+    <div class="w-full">
+      <SearchInput
+        placeholder="Search by Anime Name"
+        v-model="searchInput"
+        :button-disabled="!searchInput"
+      />
+    </div>
 
-  <p v-if="isLoading">loading...</p>
+    <SkeletonCard v-if="isLoading" />
+
+    <ul v-if="!isLoading">
+      <section class="flex gap-4 flex-wrap justify-center">
+        <div class="w-[300px]" v-for="anime in animeData" :key="anime.mal_id">
+          <AnimeCard :anime="anime" />
+        </div>
+      </section>
+    </ul>
+  </section>
 </template>
