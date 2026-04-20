@@ -7,6 +7,10 @@ import { useAnimeSearch } from '@/composables/useAnimeSearch'
 import { refDebounced } from '@vueuse/core'
 import SkeletonCard from '@/components/SkeletonCard.vue'
 import AnimeCard from '@/components/AnimeCard.vue'
+import { useRouter } from 'vue-router'
+import CardWrapper from '@/components/CardWrapper.vue'
+
+const router = useRouter()
 
 const searchInput = ref('')
 const searchQuery = refDebounced(searchInput, 400)
@@ -21,13 +25,17 @@ const animeData = computed(
 const isLoading = computed(
   () => Boolean(querySearchAnime.isLoading.value) || Boolean(queryTopAnime.isLoading.value),
 )
+
+const redirectToDetails = (id: number) => {
+  router.push('anime/' + id)
+}
 </script>
 
 <template>
-  <section class="flex flex-col gap-4">
+  <section class="flex flex-col gap-4 px-4 py-6">
     <h1>Explore</h1>
 
-    <div class="w-full">
+    <div class="w-full px-6">
       <SearchInput
         placeholder="Search by Anime Name"
         v-model="searchInput"
@@ -35,14 +43,22 @@ const isLoading = computed(
       />
     </div>
 
-    <SkeletonCard v-if="isLoading" />
+    <section class="flex gap-4 flex-wrap justify-center">
+      <template v-if="isLoading">
+        <CardWrapper v-for="value in [1, 2, 3, 4, 5, 6]" :key="value">
+          <SkeletonCard />
+        </CardWrapper>
+      </template>
 
-    <ul v-if="!isLoading">
-      <section class="flex gap-4 flex-wrap justify-center">
-        <div class="w-[300px]" v-for="anime in animeData" :key="anime.mal_id">
+      <template v-else>
+        <CardWrapper
+          v-for="anime in animeData"
+          :key="anime.mal_id"
+          @click="redirectToDetails(anime.mal_id)"
+        >
           <AnimeCard :anime="anime" />
-        </div>
-      </section>
-    </ul>
+        </CardWrapper>
+      </template>
+    </section>
   </section>
 </template>

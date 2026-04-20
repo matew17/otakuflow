@@ -1,0 +1,5 @@
+<template>
+  <div class="w-[300px]">
+    <slot />
+  </div>
+</template>

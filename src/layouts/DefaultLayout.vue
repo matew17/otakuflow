@@ -9,7 +9,7 @@ const auth = useAuthStore()
   <div class="min-h-screen bg-surface text-white">
     <AppHeader v-if="auth.isLoggedIn" />
 
-    <main class="max-w-7xl mx-auto px-4 py-6">
+    <main class="max-w-7xl mx-auto">
       <router-view />
     </main>
   </div>
