@@ -14,13 +14,13 @@ const logoutForm = async () => {
 
 <template>
   <nav class="flex flex-row items-center bg-primary gap-4 p-2">
-    <RouterLink class="p-2" activeClass=" border border-black text-black" to="/explore">
+    <RouterLink class="p-2" active-class=" border border-black text-black" to="/explore">
       Explore
     </RouterLink>
-    <RouterLink class="p-2" activeClass=" border border-black text-black" to="/library">
+    <RouterLink class="p-2" active-class=" border border-black text-black" to="/library">
       Library
     </RouterLink>
 
-    <BaseButton @click="logoutForm" variant="secondary">Logout</BaseButton>
+    <BaseButton variant="secondary" @click="logoutForm">Logout</BaseButton>
   </nav>
 </template>

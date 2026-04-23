@@ -40,11 +40,11 @@ const model = defineModel<string>()
         </svg>
       </div>
       <input
-        class="block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-white text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-white"
         :id="id"
+        v-model="model"
+        class="block w-full p-3 ps-9 bg-neutral-secondary-medium border border-default-medium text-white text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-white"
         type="search"
         :placeholder="placeholder"
-        v-model="model"
       />
     </div>
   </form>

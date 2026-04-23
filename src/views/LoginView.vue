@@ -47,17 +47,17 @@ const loginForm = async () => {
           <form class="space-y-4 md:space-y-6" novalidate @submit.prevent="loginForm">
             <BaseInput
               id="email"
+              v-model="form.email"
               label="Email"
               placeholder="Enter a valid email"
               type="email"
-              v-model="form.email"
             />
             <BaseInput
               id="password"
+              v-model="form.password"
               label="Password"
               placeholder="Enter your password"
               type="password"
-              v-model="form.password"
             />
             <BaseButton type="submit" :disabled="!form.email || !form.password">
               Sign in

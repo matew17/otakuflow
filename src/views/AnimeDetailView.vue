@@ -67,9 +67,9 @@ const sortedCharacters = computed(() =>
     </h1>
 
     <section class="flex justify-center">
-      <p class="text-indigo-200" v-for="(genre, index) in data?.data.genres" :key="genre.mal_id">
+      <p v-for="(genre, index) in data?.data.genres" :key="genre.mal_id" class="text-indigo-200">
         {{ genre.name }}
-        <span class="text-indigo-600" v-if="index !== Number(data?.data?.genres?.length) - 1">
+        <span v-if="index !== Number(data?.data?.genres?.length) - 1" class="text-indigo-600">
           &nbsp;•&nbsp;
         </span>
       </p>
@@ -83,9 +83,9 @@ const sortedCharacters = computed(() =>
 
     <section class="flex gap-4 flex-wrap justify-center py-4">
       <div
-        class="flex flex-col w-[100px] gap-2"
         v-for="value in sortedCharacters"
         :key="value.character.mal_id"
+        class="flex flex-col w-[100px] gap-2"
       >
         <img
           :src="value.character.images.webp.image_url ?? ''"
