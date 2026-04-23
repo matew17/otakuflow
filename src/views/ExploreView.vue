@@ -37,8 +37,8 @@ const redirectToDetails = (id: number) => {
 
     <div class="w-full px-6">
       <SearchInput
-        placeholder="Search by Anime Name"
         v-model="searchInput"
+        placeholder="Search by Anime Name"
         :button-disabled="!searchInput"
       />
     </div>
