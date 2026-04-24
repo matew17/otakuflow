@@ -23,4 +23,21 @@ test.describe('Login page', () => {
     await expect(button).toBeVisible()
     await expect(button).toBeDisabled()
   })
+
+  test('redirects to /explore after successful login', async ({ page }) => {
+    await page.getByLabel('Email').fill('test@example.com')
+    await page.getByLabel('Password').fill('anypassword')
+    await page.getByRole('button', { name: 'Sign in' }).click()
+    await expect(page).toHaveURL(/\/explore/)
+  })
+
+  test('stays logged in after page reload', async ({ page }) => {
+    await page.getByLabel('Email').fill('test@example.com')
+    await page.getByLabel('Password').fill('anypassword')
+    await page.getByRole('button', { name: 'Sign in' }).click()
+    await expect(page).toHaveURL(/\/explore/)
+    await page.reload()
+    await expect(page).not.toHaveURL(/\/login/)
+    await expect(page).toHaveURL(/\/explore/)
+  })
 })
