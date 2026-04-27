@@ -69,12 +69,12 @@ Route structure:
 
 ## Agent rules (MUST)
 
-- R1. Before writing code, call the `planner` subagent to produce `docs/prds/<id>-<slug>.md`. Human must approve by setting frontmatter `approved: true`.
+- R1. If the full pipeline is active (confirmed by user via G0, or auto-triggered by R6): call the `planner` subagent to produce `docs/prds/<id>-<slug>.md`. Human must approve by setting frontmatter `approved: true` before implementation starts.
 - R2. For any `.vue` file touched, load skill `vue-component`.
 - R3. Every task ends with a run log in `docs/agent-runs/`.
 - R4. Tests MUST validate the PRD acceptance criteria, not the implementation.
 - R5. After the tester passes: push the feature branch and open a PR against `main` via `gh pr create`. Then immediately run the `reviewer` subagent against the open PR. Do not ask for confirmation at either step — both are authorized by a passing tester. Always link the run log in the PR body.
-- R6. Use the full pipeline (implementer → tester → open PR → reviewer) for any change that adds a new route, component, store, or composable. Skip subagents only for isolated fixes (single file, <20 lines, no new abstractions). When in doubt, ask (G4).
+- R6. The full pipeline (implementer → tester → open PR → reviewer) is **mandatory** when a change: (a) adds a new route, component, store, or composable; OR (b) touches more than one file; OR (c) exceeds 20 lines of change. Exception: pure doc/comment edits and config tweaks. For everything else, apply G0 first.
 
 ## Agent rules (MUST NOT)
 
@@ -93,10 +93,15 @@ Route structure:
 
 ## Human gates
 
-- G1 PRD approval before implementation starts.
+- G0 **Pipeline preference check — apply BEFORE reading files or starting any work:**
+  Classify the request as one of:
+  - **Trivial**: single file, <20 lines, no new abstractions → proceed directly without asking.
+  - **Non-trivial**: anything else (multi-file, layout changes, new features, refactors) → **stop and ask the user**: _"This looks non-trivial. ¿Quieres que use el pipeline completo (planner → implementer → tester → PR → reviewer) o prefieres que lo resuelva directamente?"_ Wait for the answer before doing anything else.
+    Never skip G0 by assuming the user wants the fast path.
+- G1 PRD approval before implementation starts (only applies when the full pipeline is active).
 - G2 Human merges PR (the agent never merges); CI must pass and reviewer approval must be present before merge.
 - G3 Human approves production deploy in GitHub Environments.
-- G4 If hesitating or unsure about running the agentic solution when a request lands, then ask in the first prompt.
+- G4 If hesitating or unsure, apply G0.
 
 ## Cautious paths (human must co-edit)
 
