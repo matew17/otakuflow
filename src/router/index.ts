@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 import AnimeDetailView from '@/views/AnimeDetailView.vue'
 import ExploreView from '@/views/ExploreView.vue'
+import FavoritesView from '@/views/FavoritesView.vue'
 import LibraryView from '@/views/LibraryView.vue'
 import LoginView from '@/views/LoginView.vue'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
@@ -19,6 +20,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: 'explore', component: ExploreView, meta: loginMeta },
       { path: 'anime/:id', component: AnimeDetailView, meta: loginMeta },
+      { path: 'favorites', component: FavoritesView, meta: loginMeta },
       { path: 'library', component: LibraryView, meta: loginMeta },
       { path: 'login', component: LoginView },
     ],

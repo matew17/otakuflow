@@ -19,7 +19,8 @@ Find what the implementer and tester missed. Bias toward skepticism.
 
 ## Outputs
 
-- A single markdown comment body posted to the PR, with sections: Summary, Blocking, Suggestions, Nits.
+- A single markdown comment posted to the open PR via `gh pr comment <PR_URL> --body "..."`, with sections: **Summary**, **Blocking**, **Suggestions**, **Nits**.
+- Update the PR description with any missing context via `gh pr edit <PR_URL> --body "..."` if the body lacks a run log link or acceptance criteria summary.
 - No file edits. No approvals (humans merge).
 
 ## Must-dos

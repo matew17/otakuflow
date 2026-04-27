@@ -20,6 +20,9 @@ const logoutForm = async () => {
     <RouterLink class="p-2" active-class=" border border-black text-black" to="/library">
       Library
     </RouterLink>
+    <RouterLink class="p-2" active-class=" border border-black text-black" to="/favorites">
+      Favorites
+    </RouterLink>
 
     <BaseButton variant="secondary" @click="logoutForm">Logout</BaseButton>
   </nav>
