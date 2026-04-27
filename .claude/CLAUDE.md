@@ -74,6 +74,8 @@ Route structure:
 - R3. Every task ends with a run log in `docs/agent-runs/`.
 - R4. Tests MUST validate the PRD acceptance criteria, not the implementation.
 - R5. Open PRs against `main` from `feat/<id>-<slug>` branches only.
+- R6. If there is an active branch with a written plan approved, and we are iterating over it, make sure that we don't override any files unless it's asked. If the request is something like: "Fix specific part of the code", you should not call sub agents at all, and only work in specific requests.
+- R7. Do not use the full agentic (Sub Agents) solution when the request is simple. There are cases when it makes sense to run everything in the principal agent. If you are unsure, then ask.
 
 ## Agent rules (MUST NOT)
 
@@ -95,6 +97,7 @@ Route structure:
 - G1 PRD approval before implementation starts.
 - G2 Human merges PR; CI + reviewer comment required.
 - G3 Human approves production deploy in GitHub Environments.
+- G4 If hesitating or unsure about running the agentic solution when a request lands, then ask in the first prompt.
 
 ## Cautious paths (human must co-edit)
 
