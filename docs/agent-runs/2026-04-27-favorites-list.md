@@ -3,8 +3,8 @@ task: 001-favorites-list
 date: 2026-04-27
 branch: feat/001-favorites-list
 pr: pending
-agents_used: [planner]
-models: { planner: sonnet }
+agents_used: [planner, implementer, tester, reviewer]
+models: { planner: sonnet, implementer: sonnet, tester: sonnet, reviewer: sonnet }
 ---
 
 # Run log — Favorites List
@@ -26,6 +26,9 @@ Add a heart-toggle icon to every AnimeCard, a Pinia store persisted via pinia-pl
 ## Subagent calls
 
 1. planner — produced `docs/prds/001-favorites-list.md`; PRD updated inline to match user requirements (Pinia store, card icon instead of detail page).
+2. implementer — reviewed all uncommitted code against AC1–AC8; all passed; committed at `77e3832`.
+3. tester — identified AC3–AC7 had zero coverage; added `src/__tests__/favorites-components.spec.ts` (17 tests); committed at `2bf8255`; total 31 tests passing.
+4. reviewer — verdict: Request Changes; 2 blockers (store called directly from presentational component; raw hex color); 4 warnings. Blockers resolved: introduced `useFavoriteToggle` composable, switched SVG to `currentColor` + `text-accent` theme token.
 
 ## Diffs of note
 
