@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { useFavoritesStore } from '@/stores/favorites'
 import AnimeCard from '@/components/AnimeCard.vue'
 import CardWrapper from '@/components/CardWrapper.vue'
+import PageTitle from '@/components/PageTitle.vue'
 
 const router = useRouter()
 const favoritesStore = useFavoritesStore()
@@ -14,7 +15,7 @@ const redirectToDetails = (id: number) => {
 
 <template>
   <section class="flex flex-col gap-4 px-4 py-6">
-    <h1>Favorites</h1>
+    <PageTitle title="Favorites" />
 
     <section class="flex gap-4 flex-wrap justify-center">
       <template v-if="favoritesStore.favorites.length === 0">

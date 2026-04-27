@@ -4,6 +4,7 @@ import { useGetAnimeCharacters } from '@/composables/useAnimeCharacters'
 import { useGetAnimeDetails } from '@/composables/useAnimeDetail'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import PageTitle from '@/components/PageTitle.vue'
 
 const route = useRoute()
 const animeId = computed(() => Number(route.params?.id))
@@ -62,9 +63,7 @@ const sortedCharacters = computed(() =>
       </div>
     </section>
 
-    <h1 class="mt-8 mb-2 text-xl text-center font-bold">
-      {{ data?.data.title }}
-    </h1>
+    <PageTitle :title="data?.data.title ?? ''" />
 
     <section class="flex justify-center">
       <p v-for="(genre, index) in data?.data.genres" :key="genre.mal_id" class="text-indigo-200">

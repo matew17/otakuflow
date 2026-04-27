@@ -9,6 +9,7 @@ import SkeletonCard from '@/components/SkeletonCard.vue'
 import AnimeCard from '@/components/AnimeCard.vue'
 import { useRouter } from 'vue-router'
 import CardWrapper from '@/components/CardWrapper.vue'
+import PageTitle from '@/components/PageTitle.vue'
 
 const router = useRouter()
 
@@ -33,7 +34,7 @@ const redirectToDetails = (id: number) => {
 
 <template>
   <section class="flex flex-col gap-4 px-4 py-6">
-    <h1>Explore</h1>
+    <PageTitle title="Explore" />
 
     <div class="w-full px-6">
       <SearchInput
