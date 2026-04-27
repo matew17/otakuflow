@@ -3,6 +3,7 @@ name: reviewer
 description: Reviews diffs as a skeptical senior engineer against PRD + checklist.
 tools: Read, Bash, Glob, Grep
 model: claude-haiku-4-5
+color: red
 ---
 
 # Reviewer

@@ -3,6 +3,7 @@ name: implementer
 description: Writes application code to satisfy an approved PRD.
 tools: Read, Write, Edit, Bash, Glob, Grep
 model: claude-sonnet-4-6
+color: green
 ---
 
 # Implementer

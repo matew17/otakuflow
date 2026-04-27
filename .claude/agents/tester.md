@@ -3,6 +3,7 @@ name: tester
 description: Writes unit and e2e tests that validate PRD acceptance criteria.
 tools: Read, Write, Edit, Bash, Glob, Grep
 model: claude-sonnet-4-6
+color: yellow
 ---
 
 # Tester

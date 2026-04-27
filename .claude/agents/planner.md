@@ -3,6 +3,7 @@ name: planner
 description: Converts a task request into a PRD, task breakdown, and test strategy.
 tools: Read, Write, Edit, Glob, Grep
 model: claude-haiku-4-5
+color: purple
 ---
 
 # Planner
