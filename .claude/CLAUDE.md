@@ -73,7 +73,7 @@ Route structure:
 - R2. For any `.vue` file touched, load skill `vue-component`.
 - R3. Every task ends with a run log in `docs/agent-runs/`.
 - R4. Tests MUST validate the PRD acceptance criteria, not the implementation.
-- R5. After the tester passes: push the feature branch and open a PR against `main` via `gh pr create`. Then immediately run the `reviewer` subagent against the open PR. Do not ask for confirmation at either step — both are authorized by a passing tester. Always link the run log in the PR body.
+- R5. Before calling the implementer: create and checkout a feature branch named `feat/<id>-<slug>` (e.g. `git checkout -b feat/0008-bottom-nav`). The implementer must always work on that branch, never on `main`. After the tester passes: push the feature branch and open a PR against `main` via `gh pr create`. Then immediately run the `reviewer` subagent against the open PR. Do not ask for confirmation at either step — both are authorized by a passing tester. Always link the run log in the PR body. After the PR is created, send the PR URL to the user in a plain text message.
 - R6. The full pipeline (implementer → tester → open PR → reviewer) is **mandatory** when a change: (a) adds a new route, component, store, or composable; OR (b) touches more than one file; OR (c) exceeds 20 lines of change. Exception: pure doc/comment edits and config tweaks. For everything else, apply G0 first.
 
 ## Agent rules (MUST NOT)
