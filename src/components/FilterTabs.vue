@@ -25,7 +25,7 @@ const onTabClick = (value: FilterValue) => {
       v-for="tab in tabs"
       :key="tab.value"
       type="button"
-      class="flex-1 rounded-base px-4 py-2 text-sm font-medium transition-colors"
+      class="flex-1 rounded-base px-4 py-2 text-sm font-medium transition-colors border border-white"
       :class="
         props.modelValue === tab.value
           ? 'bg-primary text-white'

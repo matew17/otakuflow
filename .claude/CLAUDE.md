@@ -69,7 +69,7 @@ Route structure:
 
 ## Agent rules (MUST)
 
-- R1. If the full pipeline is active (confirmed by user via G0, or auto-triggered by R6): call the `planner` subagent to produce `docs/prds/<id>-<slug>.md`. Human must approve by setting frontmatter `approved: true` before implementation starts.
+- R1. If the full pipeline is active (confirmed by user via G0, or auto-triggered by R6): call the `planner` subagent to produce `docs/prds/<id>-<slug>.md`. Human must approve by setting frontmatter `approved: true` before implementation starts. When writing the PRD test strategy, the planner MUST include E2E tests as a required (not optional/deferred) section for any story that touches a view, route, or UI interaction. Never label E2E as "optional" or "deferred" without explicit user approval.
 - R2. For any `.vue` file touched, load skill `vue-component`.
 - R3. Every task ends with a run log in `docs/agent-runs/`.
 - R4. Tests MUST validate the PRD acceptance criteria, not the implementation.
@@ -82,12 +82,13 @@ Route structure:
 - R8. Do NOT edit `.github/workflows/`, `.claude/`, `docs/adr/`, or `.env*` without env var `CC_ALLOW_SENSITIVE=1`.
 - R9. Do NOT add new dependencies without recording the reason in the run log.
 - R10. Do NOT run commands beyond the allowlist in `.claude/settings.json`.
+- R11. The tester MUST write Playwright E2E tests for every story that touches a view, route, or user-facing interaction. E2E tests are never optional or deferrable unless the user explicitly approves skipping them in writing. If the PRD marks E2E as "optional" or "deferred", the tester must ignore that label and write them anyway.
 
 ## Subagent routing
 
 - requirements intake → `planner`
 - code change → `implementer`
-- tests → `tester`
+- tests → `tester` (unit + component + **E2E Playwright always required** for UI/route changes)
 - PR diff review → `reviewer`
 - any diff touching auth/payments/crypto patterns → `security` (in addition)
 
