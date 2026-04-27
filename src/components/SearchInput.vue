@@ -18,7 +18,7 @@ const model = defineModel<string>()
 </script>
 
 <template>
-  <form class="max-w-md mx-auto">
+  <form class="max-w-md mx-auto" @submit.prevent>
     <label for="search" class="block mb-2.5 text-sm font-medium text-heading sr-only">Search</label>
     <div class="relative">
       <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
