@@ -15,6 +15,10 @@ export const getTopAnime = () => {
   return apiFetch<AnimeResponse>('/top/anime')
 }
 
+export const getSeasonNow = () => {
+  return apiFetch<AnimeResponse>('/seasons/now')
+}
+
 export const getCharacters = (animeId: number) => {
   return apiFetch<AnimeCharacterResponse>(`/anime/${animeId}/characters`)
 }
