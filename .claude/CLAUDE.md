@@ -73,16 +73,15 @@ Route structure:
 - R2. For any `.vue` file touched, load skill `vue-component`.
 - R3. Every task ends with a run log in `docs/agent-runs/`.
 - R4. Tests MUST validate the PRD acceptance criteria, not the implementation.
-- R5. Open PRs against `main` from `feat/<id>-<slug>` branches only.
-- R6. If there is an active branch with a written plan approved, and we are iterating over it, make sure that we don't override any files unless it's asked. If the request is something like: "Fix specific part of the code", you should not call sub agents at all, and only work in specific requests.
-- R7. Do not use the full agentic (Sub Agents) solution when the request is simple. There are cases when it makes sense to run everything in the principal agent. If you are unsure, then ask.
+- R5. After the tester passes: push the feature branch and open a PR against `main` via `gh pr create`. Then immediately run the `reviewer` subagent against the open PR. Do not ask for confirmation at either step — both are authorized by a passing tester. Always link the run log in the PR body.
+- R6. Use the full pipeline (implementer → tester → open PR → reviewer) for any change that adds a new route, component, store, or composable. Skip subagents only for isolated fixes (single file, <20 lines, no new abstractions). When in doubt, ask (G4).
 
 ## Agent rules (MUST NOT)
 
-- R6. Do NOT push to `main` directly or merge PRs.
-- R7. Do NOT edit `.github/workflows/`, `.claude/`, `docs/adr/`, or `.env*` without env var `CC_ALLOW_SENSITIVE=1`.
-- R8. Do NOT add new dependencies without recording the reason in the run log.
-- R9. Do NOT run commands beyond the allowlist in `.claude/settings.json`.
+- R7. Do NOT push commits directly to `main` or merge PRs. Pushing feature branches and opening PRs is expected and does not require confirmation.
+- R8. Do NOT edit `.github/workflows/`, `.claude/`, `docs/adr/`, or `.env*` without env var `CC_ALLOW_SENSITIVE=1`.
+- R9. Do NOT add new dependencies without recording the reason in the run log.
+- R10. Do NOT run commands beyond the allowlist in `.claude/settings.json`.
 
 ## Subagent routing
 
@@ -95,7 +94,7 @@ Route structure:
 ## Human gates
 
 - G1 PRD approval before implementation starts.
-- G2 Human merges PR; CI + reviewer comment required.
+- G2 Human merges PR (the agent never merges); CI must pass and reviewer approval must be present before merge.
 - G3 Human approves production deploy in GitHub Environments.
 - G4 If hesitating or unsure about running the agentic solution when a request lands, then ask in the first prompt.
 
