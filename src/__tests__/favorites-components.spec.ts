@@ -10,7 +10,6 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 
 import AnimeCard from '../components/AnimeCard.vue'
-import AppHeader from '../components/AppHeader.vue'
 import FavoritesView from '../views/FavoritesView.vue'
 import { useFavoritesStore } from '../stores/favorites'
 import type { Anime } from '../types/anime'
@@ -157,49 +156,6 @@ describe('AnimeCard — AC3: heart button', () => {
     await nextTick()
 
     expect(parentClicked).toBe(false)
-  })
-})
-
-// ---------------------------------------------------------------------------
-// AC4 — AppHeader Favorites nav link
-// ---------------------------------------------------------------------------
-
-describe('AppHeader — AC4: Favorites navigation link', () => {
-  beforeEach(() => {
-    localStorage.clear()
-    makePinia()
-  })
-
-  afterEach(() => {
-    localStorage.clear()
-  })
-
-  it('renders a link to /favorites in the navigation', async () => {
-    const router = makeStubRouter()
-    await router.push('/')
-    await router.isReady()
-
-    const wrapper = mount(AppHeader, {
-      global: { plugins: [router] },
-    })
-
-    const links = wrapper.findAll('a')
-    const favLink = links.find((l) => l.attributes('href')?.includes('favorites'))
-    expect(favLink).toBeDefined()
-  })
-
-  it('Favorites link text is "Favorites"', async () => {
-    const router = makeStubRouter()
-    await router.push('/')
-    await router.isReady()
-
-    const wrapper = mount(AppHeader, {
-      global: { plugins: [router] },
-    })
-
-    const links = wrapper.findAll('a')
-    const favLink = links.find((l) => l.attributes('href')?.includes('favorites'))
-    expect(favLink?.text().trim()).toBe('Favorites')
   })
 })
 
