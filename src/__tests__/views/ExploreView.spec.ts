@@ -97,6 +97,10 @@ import { useAnimeSeasonNow } from '../../composables/useAnimeSeasonNow'
 import { useAnimeSearch } from '../../composables/useAnimeSearch'
 import ExploreView from '../../views/ExploreView.vue'
 
+type TopAnimeResult = ReturnType<typeof useGetTopAnime>
+type SeasonNowResult = ReturnType<typeof useAnimeSeasonNow>
+type AnimeSearchResult = ReturnType<typeof useAnimeSearch>
+
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
@@ -126,9 +130,9 @@ function fakeQuery(data: AnimeResponse | null, options: { isLoading?: boolean } 
 
 /** Default mock wiring: top=data, season=data, search=empty+disabled */
 function wireDefaultMocks() {
-  vi.mocked(useGetTopAnime).mockReturnValue(fakeQuery(topResponse) as any)
-  vi.mocked(useAnimeSeasonNow).mockReturnValue(fakeQuery(seasonResponse) as any)
-  vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(null) as any)
+  vi.mocked(useGetTopAnime).mockReturnValue(fakeQuery(topResponse) as unknown as TopAnimeResult)
+  vi.mocked(useAnimeSeasonNow).mockReturnValue(fakeQuery(seasonResponse) as unknown as SeasonNowResult)
+  vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(null) as unknown as AnimeSearchResult)
 }
 
 async function mountExplore(path = '/explore') {
@@ -292,7 +296,7 @@ describe('ExploreView — AC5: search input visible in both tabs', () => {
 describe('ExploreView — AC6: ?q=naruto pre-populates search', () => {
   it('input is pre-filled with naruto when ?q=naruto is in the URL', async () => {
     // For the search path: useAnimeSearch must return search results when query is active
-    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(searchResponse) as any)
+    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(searchResponse) as unknown as AnimeSearchResult)
 
     const { wrapper } = await mountExplore('/explore?q=naruto')
     await nextTick()
@@ -308,7 +312,7 @@ describe('ExploreView — AC6: ?q=naruto pre-populates search', () => {
 
 describe('ExploreView — AC7: clearing search reverts to filter data', () => {
   it('calls router.replace to remove q param when search is cleared', async () => {
-    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(searchResponse) as any)
+    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(searchResponse) as unknown as AnimeSearchResult)
     const { wrapper, router } = await mountExplore('/explore?q=naruto')
     await nextTick()
 
@@ -332,8 +336,8 @@ describe('ExploreView — AC7: clearing search reverts to filter data', () => {
 
 describe('ExploreView — AC9: loading state shows skeleton cards', () => {
   it('renders skeleton cards when top anime query is loading', async () => {
-    vi.mocked(useGetTopAnime).mockReturnValue(fakeQuery(null, { isLoading: true }) as any)
-    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(null) as any)
+    vi.mocked(useGetTopAnime).mockReturnValue(fakeQuery(null, { isLoading: true }) as unknown as TopAnimeResult)
+    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(null) as unknown as AnimeSearchResult)
 
     const { wrapper } = await mountExplore('/explore?filter=top')
     await nextTick()
@@ -345,8 +349,8 @@ describe('ExploreView — AC9: loading state shows skeleton cards', () => {
   })
 
   it('renders skeleton cards when season query is loading', async () => {
-    vi.mocked(useAnimeSeasonNow).mockReturnValue(fakeQuery(null, { isLoading: true }) as any)
-    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(null) as any)
+    vi.mocked(useAnimeSeasonNow).mockReturnValue(fakeQuery(null, { isLoading: true }) as unknown as SeasonNowResult)
+    vi.mocked(useAnimeSearch).mockReturnValue(fakeQuery(null) as unknown as AnimeSearchResult)
 
     const { wrapper } = await mountExplore('/explore?filter=season')
     await nextTick()

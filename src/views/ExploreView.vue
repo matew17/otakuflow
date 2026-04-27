@@ -34,8 +34,8 @@ const page = ref(1)
 
 const isSearching = computed(() => searchQuery.value.length > 2)
 
-const queryTopAnime = useGetTopAnime()
-const querySeasonNow = useAnimeSeasonNow()
+const queryTopAnime = useGetTopAnime(computed(() => !isSearching.value && activeFilter.value === 'top'))
+const querySeasonNow = useAnimeSeasonNow(computed(() => !isSearching.value && activeFilter.value === 'season'))
 const querySearchAnime = useAnimeSearch(searchQuery, page)
 
 const animeData = computed(() => {
